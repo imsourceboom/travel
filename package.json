@@ -20,6 +20,8 @@
         "del": "^4.0.0",
         "gulp": "3.9.1",
         "gulp-autoprefixer": "^6.0.0",
+        "gulp-babel": "^8.0.0",
+        "gulp-concat": "^2.6.1",
         "gulp-pug": "^4.0.1",
         "gulp-sass": "^4.0.2",
         "gulp-sourcemaps": "^2.6.5",
@@ -28,6 +30,7 @@
         "merge-stream": "^1.0.1",
         "minimatch": "^3.0.4",
         "run-sequence": "^2.2.1",
+        "uglifyjs-webpack-plugin": "^2.1.2",
         "webpack-stream": "^5.2.1"
     },
     "dependencies": {

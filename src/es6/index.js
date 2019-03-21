@@ -1,4 +1,3 @@
-import './map';
 // import './hamburger';
 
 /*

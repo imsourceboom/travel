@@ -12,6 +12,9 @@ const del = require('del');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const webpack = require('webpack-stream');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const concat = require('gulp-concat');
+const babel = require('gulp-babel');
 
 const conf = {
     paths: {
@@ -20,7 +23,8 @@ const conf = {
         js: {
             src: './src/es6/**/*.js',
             build: './build/js',
-            index: './src/es6/index.js'
+            index: './src/es6/index.js',
+            map: './src/es6/map/**/*.js'
         },
         sass: {
             src: './src/sass/**/*.scss',
@@ -38,8 +42,8 @@ const conf = {
             index: './index.html'
         }
     },
-    errorHandler: function (title) {
-        return function (err) {
+    errorHandler: function(title) {
+        return function(err) {
             gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
             this.emit('end');
         };
@@ -61,11 +65,11 @@ const conf = {
 /**
  *  Default task
  */
-gulp.task('default', function () {
+gulp.task('default', function() {
     runSequence('clean', 'run_source', 'watch', 'serve');
 });
 
-gulp.task('run_source', function () {
+gulp.task('run_source', function() {
     runSequence('pug', 'html', 'sass', 'js');
 });
 
@@ -73,36 +77,46 @@ gulp.task('pug', [], function buildHTML() {
     const pugErrHandler = conf.errorHandler('pug');
     let indexPug = gulp
         .src(conf.paths.pug.index)
-        .pipe(pug({
-            pretty: true
-        }).on('error', pugErrHandler))
+        .pipe(
+            pug({
+                pretty: true
+            }).on('error', pugErrHandler)
+        )
         .pipe(gulp.dest(conf.paths.pug.buildIndex))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
     let pagesPug = gulp
         .src(conf.paths.pug.pages)
-        .pipe(pug({
-            pretty: true
-        }).on('error', pugErrHandler))
+        .pipe(
+            pug({
+                pretty: true
+            }).on('error', pugErrHandler)
+        )
         .pipe(gulp.dest(conf.paths.pug.buildPages))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
 
     return merge(indexPug, pagesPug);
 });
 
-gulp.task('html', [], function () {
+gulp.task('html', [], function() {
     return gulp
         .src(conf.paths.html.src)
         .pipe(gulp.dest(conf.paths.html.build))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
 });
 
-gulp.task('sass', [], function () {
+gulp.task('sass', [], function() {
     const sassErrHandler = conf.errorHandler('sass');
     gulp.src(conf.paths.sass.src)
         .pipe(sourcemaps.init()) // init sourcemaps
@@ -110,14 +124,16 @@ gulp.task('sass', [], function () {
         .pipe(autoprefixer(conf.sass.autoprefixer))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(conf.paths.sass.build))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
 });
 
 gulp.task('js', [], function buildHTML() {
     const jsErrHandler = conf.errorHandler('js');
-    return gulp
+    let originJs = gulp
         .src(conf.paths.js.index)
         .pipe(
             webpack({
@@ -128,26 +144,66 @@ gulp.task('js', [], function buildHTML() {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [{
-                        use: {
-                            loader: 'babel-loader',
-                            options: {
-                                presets: ['@babel/preset-env']
+                    rules: [
+                        {
+                            use: {
+                                loader: 'babel-loader',
+                                options: {
+                                    presets: ['@babel/preset-env']
+                                }
                             }
                         }
-                    }]
+                    ]
                 },
+                // optimization: {
+                //     minimizer: [
+                //         new UglifyJsPlugin({
+                //             uglifyOptions: {
+                //                 ecma: 5,
+                //                 warnings: true,
+                //                 compress: false,
+                //                 mangle: false,
+                //                 keep_fnames: true,
+                //                 output: {
+                //                     beautify: true,
+                //                     comments: true
+                //                 }
+                //             }
+                //         })
+                //     ]
+                // },
                 devtool: 'source-map',
                 mode: 'production'
             })
         )
         .pipe(gulp.dest(conf.paths.js.build))
-        .pipe(browserSync.reload({
-            stream: true
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
+
+    let mapJs = gulp
+        .src(conf.paths.js.map)
+        .pipe(sourcemaps.init())
+        .pipe(
+            babel({
+                presets: ['@babel/env']
+            })
+        )
+        .pipe(concat('map.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(conf.paths.js.build))
+        .pipe(
+            browserSync.reload({
+                stream: true
+            })
+        );
+
+    return merge(originJs, mapJs);
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', function() {
     del(['./build/index.html']);
     del(['./build/html/**/*']);
     del(['./build/css/**/*']);
@@ -157,7 +213,7 @@ gulp.task('clean', function () {
 /**
  * open local server for livereload
  */
-gulp.task('serve', function () {
+gulp.task('serve', function() {
     browserSync.instance = browserSync.init({
         // startPath: '/html/index.html',
         startPath: conf.paths.html.index,
@@ -173,7 +229,7 @@ gulp.task('serve', function () {
 /**
  * watch source files
  */
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch(path.join(conf.paths.src, '/**/*.pug'), ['pug']);
     gulp.watch(path.join(conf.paths.src, '/**/*.html'), ['html']);
     gulp.watch(
@@ -184,7 +240,7 @@ gulp.task('watch', function () {
     gulp.watch([path.join(conf.paths.src, '/**/*.js')], ['js']);
 });
 
-gulp.task('reload', function () {
+gulp.task('reload', function() {
     browserSync.reload({
         stream: true
     });

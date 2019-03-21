@@ -18,8 +18,8 @@
   </head>
   <body>
     <main>
-      <section>
-        <div id="map" style="width:100vw;height:100vh;"></div>
+      <section class="map-container">
+        <div id="map"></div>
       </section>
       <article class="search container">
         <div class="wrap">
@@ -30,6 +30,7 @@
         </div>
       </article>
     </main>
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb39959bf704c106a6091ce54039d260&amp;libraries=services,clusterer"></script>
+    <script src="/js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD4AUTIjNt7qojktQzt9DyFc1TRS_4lWA&amp;callback=initMap" async defer></script>
   </body>
 </html>

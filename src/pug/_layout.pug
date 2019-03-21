@@ -15,8 +15,8 @@ html(lang="ko")
         link(rel="manifest", href="/manifest.json")
         link(rel="stylesheet", href="/css/main.css")
         script(src="https://polyfill.io/v3/polyfill.min.js?flags=gated" async defer)
-        
         script(src="/js/app.js" defer)
+        
 
     body
 
@@ -28,5 +28,20 @@ html(lang="ko")
             block main
 
         //- include layout/footer
+
+        //- script.
+            //- var map;
+            //- function initMap() {
+            //-     map = new google.maps.Map(document.getElementById('map'), {
+            //-         center: {lat: 36.3310438, lng: 127.33910279999998},
+            //-         zoom: 8
+            //-     });
+            //- }
+
+        script(src="/js/map.js")
+        script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD4AUTIjNt7qojktQzt9DyFc1TRS_4lWA&callback=initMap" async defer)
         
-        script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb39959bf704c106a6091ce54039d260&libraries=services,clusterer")
+
+        //- script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb39959bf704c106a6091ce54039d260&libraries=services,clusterer")
+        
+        
