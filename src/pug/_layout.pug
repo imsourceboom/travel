@@ -1,0 +1,32 @@
+doctype html
+html(lang="ko")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, shrink-to-fit=no")
+        meta(name="title", content="Linger")
+        meta(name="description", content="travel pin diary")
+        meta(name="keywords", content="linger, travel, trip")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="format-detaction", content="telephone=no, address=no, email=no")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(name="theme-color" content="#ffffff")
+
+        title Linger
+        link(rel="manifest", href="/manifest.json")
+        link(rel="stylesheet", href="/css/main.css")
+        script(src="https://polyfill.io/v3/polyfill.min.js?flags=gated" async defer)
+        
+        script(src="/js/app.js" defer)
+
+    body
+
+        //- include layout/intro
+
+        //- include layout/header
+
+        main
+            block main
+
+        //- include layout/footer
+        
+        script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb39959bf704c106a6091ce54039d260&libraries=services,clusterer")

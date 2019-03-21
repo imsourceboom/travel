@@ -1,0 +1,47 @@
+header
+    div.container
+        figure
+            a(href="#")
+                img(src="/assets/koinvestor_symbol.svg" alt="koinvestor logo")
+        nav
+            ul
+                -
+                    var menu = [
+                        {
+                            name:'ABOUT',
+                            id: 'about',
+                            class: 'delay-100'
+                        },
+                        {
+                            name: 'SERVICES',
+                            id:'services',
+                            class: 'delay-200'
+                        },
+                        {
+                            name:'TEAM',
+                            id:'team',
+                            class: 'delay-300'
+                            
+                        },
+                        {
+                            name:'PORTFOLIO',
+                            id:'portfolio',
+                            class: 'delay-400'
+                        },
+                        {
+                            name:'PARTNERS',
+                            id:'partners',
+                            class: 'delay-500'
+                        },
+                        {
+                            name:'CONTACT US',
+                            id:'contact',
+                            class: 'delay-600'
+                        }
+                    ]
+                each m in menu
+                    li.reveal(class=`${m.class}`)
+                        a(href=`#${m.id}` data-scroll)= m.name
+        .hamburger.hamburger--squeeze.js-hamburger
+            .hamburger-box
+                .hamburger-inner
