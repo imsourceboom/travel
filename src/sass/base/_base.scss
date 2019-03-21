@@ -32,6 +32,11 @@ label {
 input,
 textarea {
     font-size: 1rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
 
     &::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
