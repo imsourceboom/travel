@@ -28,6 +28,7 @@ article.search.container {
                 background-image: url('https://icongr.am/feather/search.svg?size=30&color=dfe4ea');
                 background-position: center;
                 background-repeat: no-repeat;
+                border-radius: 0 8px 8px 0;
                 opacity: .9;
                 transition: .5s;
             }
@@ -35,9 +36,11 @@ article.search.container {
 
         input {
             flex: 1;
-            border: none;
+            border: 0;
             font-size: 1.25rem;
             padding: 0 1rem;
+            margin: 0;
+            border-radius: 8px 0 0 8px;
             opacity: .9;
             transition: .5s;
 

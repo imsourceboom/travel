@@ -32,11 +32,14 @@ label {
 input,
 textarea {
     font-size: 1rem;
+    // margin: 0;
+    -webkit-border-radius: 0;
     -webkit-appearance: none;
     -moz-appearance: none;
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
+
 
     &::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */
