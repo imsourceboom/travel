@@ -1,15 +1,13 @@
 article.search.container {
     position: fixed;
     z-index: 2;
-    top: 15px;
+    top: 60px;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     height: 50px;
     max-width: 500px;
-    // border: 1px solid red;
-    padding: 0 1rem;
-    opacity: .95;
+    padding: 0 .6rem;
 
     @media(min-width: 768px) {
         top: 60px;
@@ -18,7 +16,6 @@ article.search.container {
     .wrap {
         display: flex;
         height: 100%;
-        background-color: #ffffff;
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 1px 10px 0 rgba(0, 0, 0, .2), 0 1px 30px 0 rgba(0, 0, 0, .15);
@@ -27,9 +24,11 @@ article.search.container {
             figure {
                 width: 50px;
                 height: 100%;
+                background-color: #ffffff;
                 background-image: url('https://icongr.am/feather/search.svg?size=30&color=dfe4ea');
                 background-position: center;
                 background-repeat: no-repeat;
+                opacity: .9;
                 transition: .5s;
             }
         }
@@ -39,6 +38,8 @@ article.search.container {
             border: none;
             font-size: 1.25rem;
             padding: 0 1rem;
+            opacity: .9;
+            transition: .5s;
 
             &::placeholder {
                 /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -60,11 +61,16 @@ article.search.container {
                 font-size: 1.2rem;
             }
 
+            &:focus {
+                opacity: 1;
+            }
+
             &:focus+label {
                 figure {
                     background-image: url('https://icongr.am/feather/search.svg?size=30&color=2bcbba');
                     background-position: center;
                     background-repeat: no-repeat;
+                    opacity: 1;
                 }
             }
         }

@@ -14,4 +14,4 @@ const initMap = () => {
     });
 };
 
-console.log('map!!');
+console.log('google map!');
