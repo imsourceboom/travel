@@ -10,8 +10,9 @@ let map;
 const initMap = () => {
     map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 36.3310438, lng: 127.33910279999998 },
-        zoom: 8
+        zoom: 8,
+        disableDefaultUI: true
     });
 };
 
-console.log('google map!');
+console.log('google map!!');

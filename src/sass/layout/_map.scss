@@ -8,5 +8,33 @@ section.map-container {
     #map {
         width: 100%;
         height: 100%;
+
+
+        /*
+            구글 맵에서
+            왼쪽 하단의 구글 로고와
+            오른 하단의 지도데이터 및 이용약관 영역 제거
+        */
+        a[href^="http://maps.google.com/maps"] {
+            display: none !important
+        }
+
+        a[href^="https://maps.google.com/maps"] {
+            display: none !important
+        }
+
+        .gmnoprint a,
+        .gmnoprint span,
+        .gm-style-cc {
+            display: none;
+        }
+
+        /*
+            구글 맵에서
+            왼쪽 하단의 확대, 축소 영역
+        */
+        // .gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom>div:first-child {
+        //     display: none;
+        // }
     }
 }
