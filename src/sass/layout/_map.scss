@@ -16,11 +16,11 @@ section.map-container {
             오른 하단의 지도데이터 및 이용약관 영역 제거
         */
         a[href^="http://maps.google.com/maps"] {
-            display: none !important
+            display: none !important;
         }
 
         a[href^="https://maps.google.com/maps"] {
-            display: none !important
+            display: none !important;
         }
 
         .gmnoprint a,

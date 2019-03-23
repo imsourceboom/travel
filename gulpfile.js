@@ -11,6 +11,7 @@ const pug = require('gulp-pug');
 const del = require('del');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
+const hash = require('gulp-hash-filename');
 const webpack = require('webpack-stream');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const concat = require('gulp-concat');
@@ -24,7 +25,8 @@ const conf = {
             src: './src/es6/**/*.js',
             build: './build/js',
             index: './src/es6/index.js',
-            map: './src/es6/map/**/*.js'
+            map: './src/es6/map/**/*.js',
+            mapbuild: './build/js/map'
         },
         sass: {
             src: './src/sass/**/*.scss',
@@ -124,6 +126,8 @@ gulp.task('sass', [], function() {
         .pipe(autoprefixer(conf.sass.autoprefixer))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(conf.paths.sass.build))
+        .pipe(hash())
+        .pipe(gulp.dest(conf.paths.sass.build))
         .pipe(
             browserSync.reload({
                 stream: true
@@ -138,10 +142,15 @@ gulp.task('js', [], function buildHTML() {
         .pipe(
             webpack({
                 entry: {
-                    app: conf.paths.js.index
+                    app: conf.paths.js.index,
+                    main: conf.paths.js.index
                 },
                 output: {
-                    filename: '[name].js'
+                    filename: chunkData => {
+                        return chunkData.chunk.name === 'app'
+                            ? '[name].js'
+                            : '[name].[chunkhash].js';
+                    }
                 },
                 module: {
                     rules: [
@@ -193,7 +202,11 @@ gulp.task('js', [], function buildHTML() {
         )
         .pipe(concat('map.js'))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(conf.paths.js.build))
+        .pipe(gulp.dest(conf.paths.js.mapbuild))
+        .pipe(concat('map.hash.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(hash())
+        .pipe(gulp.dest(conf.paths.js.mapbuild))
         .pipe(
             browserSync.reload({
                 stream: true

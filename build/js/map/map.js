@@ -19,5 +19,5 @@ var initMap = function initMap() {
   });
 };
 
-console.log('google map!!');
+console.log('google map!!!');
 //# sourceMappingURL=map.js.map
