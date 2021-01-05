@@ -35,7 +35,7 @@
         "webpack-stream": "^5.2.1"
     },
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "reset-css": "^4.0.1"
     }
 }
